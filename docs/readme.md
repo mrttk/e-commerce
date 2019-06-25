@@ -1,2 +1,2 @@
 # e-commerce
-Sample e-commerce site
+Sample **e-commerce** site
