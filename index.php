@@ -4,12 +4,11 @@ ob_start();
 require_once "Ayarlar/settings.php";
 require_once "Ayarlar/functions.php";
 require_once "Ayarlar/sitesayfalari.php";
-
 if (isset($_REQUEST["SK"])) {
     $sayfaKoduDegeri = SayiliIcerikleriFiltrele($_REQUEST["SK"]);
-} else
+} else{
     $sayfaKoduDegeri = 0;
-
+}
 if (isset($_REQUEST["SYF"])) {
     $sayfalama = SayiliIcerikleriFiltrele($_REQUEST["SYF"]);
 } else {
