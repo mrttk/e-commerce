@@ -19,8 +19,13 @@ if (isset($_SESSION["Kullanici"])) {
                             <td valign="bottom">Puanlama</td>
                         </tr>
                         <tr height="30">
-                            <td valign="top"><input class="InputAlanlari" type="email" name="EmailAdresi"
-                                                    value="<?php echo $emailAdresi; ?>">
+                            <td valign="top">
+                                <input class="InputAlanlari" type="text" name="Yıldız" value="">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top" class="YorumIcınTextareaAlanlari">
+                                <textarea name="Yorum" id="yorum" cols="30" rows="10"></textarea>
                             </td>
                         </tr>
                         <tr height="5">
