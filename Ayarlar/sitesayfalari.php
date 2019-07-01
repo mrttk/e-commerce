@@ -77,4 +77,8 @@ $sayfa[72] = "hesabimadreslereklesonuctamam.php";
 $sayfa[73] = "hesabimadreslereklesonuchata.php";
 $sayfa[74] = "hesabimadreslereklesonuceksikalan.php";
 $sayfa[75] = "hesabimyorumyap.php";
+$sayfa[76] = "hesabimyorumyapsonuc.php";
+$sayfa[77] = "hesabimyorumyapsonuctamam.php";
+$sayfa[78] = "hesabimyorumyapsonuchata.php";
+$sayfa[79] = "hesabimyorumyapsonuceksikalan.php";
 ?>
