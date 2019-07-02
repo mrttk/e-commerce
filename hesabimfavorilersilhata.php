@@ -8,7 +8,7 @@
     <tr>
         <td align="center"><b>HATA!</b>Favoriler silinemedi.</td>
     </tr>
-    <tr height="20">
+    <tr height="20" align="center">
         <td>İşlem sırasında beklenmeyen bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.</td>
     </tr>
     <tr height="200" valign="top">

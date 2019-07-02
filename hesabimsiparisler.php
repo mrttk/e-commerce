@@ -47,7 +47,7 @@ if (isset($_SESSION["Kullanici"])) {
                 <table width="1065" align="center" border="0" cellspacing="0" cellpadding="0"
                        style="margin-bottom: 20px; ">
                     <tr height="40">
-                        <td colspan="8" style="color:#FF9900;"><h3>Hesabım > Adres Bilgilerim</h3></td>
+                        <td colspan="8" style="color:#FF9900;"><h3>Hesabım > Siparişlerim</h3></td>
                     </tr>
                     <tr height="40">
                         <td colspan="8" valign="top" style="border-bottom: 1px dashed #CCC">Sipariş bilgilerinize

@@ -66,11 +66,9 @@ $sayfa[63] = "hesabimadreslerguncellesonuc.php";
 $sayfa[64] = "hesabimadreslerguncellesonuctamam.php";
 $sayfa[65] = "hesabimadreslerguncellesonuchata.php";
 $sayfa[66] = "hesabimadreslerguncellesonuceksikalan.php";
-
 $sayfa[67] = "hesabimadreslersil.php";
 $sayfa[68] = "hesabimadreslersiltamam.php";
 $sayfa[69] = "hesabimadreslersilhata.php";
-
 $sayfa[70] = "hesabimadreslerekle.php";
 $sayfa[71] = "hesabimadreslereklesonuc.php";
 $sayfa[72] = "hesabimadreslereklesonuctamam.php";
@@ -84,4 +82,5 @@ $sayfa[79] = "hesabimyorumyapsonuceksikalan.php";
 $sayfa[80] = "hesabimfavorilersil.php";
 $sayfa[81] = "hesabimfavorilersilhata.php";
 $sayfa[82] = "hesabimfavorilersileksikalan.php";
+$sayfa[83] = "urundetay.php";
 ?>

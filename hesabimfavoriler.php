@@ -77,7 +77,7 @@ if (isset($_SESSION["Kullanici"])) {
                             $urununFiyati = $urunKaydi["UrunFiyati"];
                             $urununParaBirimi = $urunKaydi["ParaBirimi"];
                             $urununResmi = $urunKaydi["UrunResmiBir"];
-                            
+
 
                             if ($urununTuru == "Erkek Ayakkabısı") {
                                 $resimKlasoruAdi = "Erkek";
@@ -85,14 +85,14 @@ if (isset($_SESSION["Kullanici"])) {
                                 $resimKlasoruAdi = "Kadin";
                             } else {
                                 $resimKlasoruAdi = "Cocuk";
-                            }    
+                            }
                             ?>
                             <tr height="50">
-                                <td width="75"><img height="60" src="Resimler/UrunResimleri/<?php echo donusumleriGeriDondur($resimKlasoruAdi);?>/<?php echo donusumleriGeriDondur($urununResmi); ?>" />
+                                <td width="75"><img height="60" src="Resimler/UrunResimleri/<?php echo donusumleriGeriDondur($resimKlasoruAdi); ?>/<?php echo donusumleriGeriDondur($urununResmi); ?>" />
                                 </td>
-                                <td width="800"><?php echo donusumleriGeriDondur($urununAdi); ?></td>
+                                <td width="800"><a href="index.php?SK=83&ID=<?php echo $urunKaydi["id"]; ?>"><?php echo donusumleriGeriDondur($urununAdi); ?></a></td>
                                 <td width="100"><?php echo donusumleriGeriDondur(fiyatBicimlendir($urununFiyati)); ?> <?php echo donusumleriGeriDondur($urununParaBirimi); ?></td>
-                                <td><img src="Resimler/Sil20x20.png"></td>
+                                <td><a href="index.php?SK=80&ID=<?php echo $favoriSatirlar["id"]; ?>"><img src="Resimler/Sil20x20.png"></a></td>
                             </tr>
                         <?php
                         }
@@ -153,16 +153,16 @@ $sayfalamaIcinSayfaIndexDegeri</a></span>";
                                 </td>
                             </tr>
                         <?php
-                    }
-                } else { ?>
-                    <tr>
-                        <td colspan="4" align="left">Sisteme kayıtlı favori ürününüz bulunmamaktadır.</td>
-                    </tr>
-                <?php } ?>
-            </table>
-        </td>
-    </tr>
-</table>
+                        }
+                    } else { ?>
+                        <tr>
+                            <td colspan="4" align="left">Sisteme kayıtlı favori ürününüz bulunmamaktadır.</td>
+                        </tr>
+                    <?php } ?>
+                </table>
+            </td>
+        </tr>
+    </table>
 <?php
 } else {
     header("Location:index.php");
