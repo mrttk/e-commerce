@@ -71,5 +71,4 @@ if (isset($_SESSION["Kullanici"])) {
     } else {
         die();
     }
-
 }
