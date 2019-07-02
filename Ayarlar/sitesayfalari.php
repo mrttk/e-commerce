@@ -83,4 +83,10 @@ $sayfa[80] = "hesabimfavorilersil.php";
 $sayfa[81] = "hesabimfavorilersilhata.php";
 $sayfa[82] = "hesabimfavorilersileksikalan.php";
 $sayfa[83] = "urundetay.php";
+$sayfa[84] = "erkekayakkabilari.php";
+$sayfa[85] = "erkekayakkabilariaramasonuc.php";
+$sayfa[86] = "kadinayakkabilari.php";
+$sayfa[87] = "kadinayakkabilariaramasonuc.php";
+$sayfa[88] = "cocukayakkabilari.php";
+$sayfa[89] = "cocukayakkabilariaramasonuc.php";
 ?>

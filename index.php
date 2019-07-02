@@ -67,12 +67,12 @@ if (isset($_REQUEST["SYF"])) {
                         <table width="873" height="30" align="center" border="0" cellspacing="0" cellpadding="0">
                             <tr>
                                 <td width="314" class="AnaMenu">&nbsp;</td>
-                                <td width="105" class="AnaMenu"><a href="index.php?SK=0">Anasayfa</a></td>
-                                <td width="158" class="AnaMenu"><a href="">Erkek
+                                <td width="105" class="AnaMenu"><a href="index.php">Anasayfa</a></td>
+                                <td width="158" class="AnaMenu"><a href="index.php?SK=84">Erkek
                                         Ayakkabıları</a></td>
-                                <td width="158" class="AnaMenu"><a href="">Kadın
+                                <td width="158" class="AnaMenu"><a href="index.php?SK=86">Kadın
                                         Ayakkabıları</a></td>
-                                <td width="138" class="AnaMenu"><a href="">Çocuk Ayakkabıları</a></td>
+                                <td width="138" class="AnaMenu"><a href="index.php?SK=88">Çocuk Ayakkabıları</a></td>
                             </tr>
                         </table>
                     </td>
