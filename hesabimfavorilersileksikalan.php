@@ -3,15 +3,16 @@
         <td>&nbsp;</td>
     </tr>
     <tr height="150">
-        <td align="center"><img src="Resimler/Tamam.png"></td>
+        <td align="center"><img src="Resimler/Dikkat.png"></td>
     </tr>
     <tr>
-        <td align="center"><b>Tebrikler!</b> Favori silme işlemini gerçekleştirdiniz.</td>
+        <td align="center"><b>Dikkat!</b> Favori silme işlemi esnasında beklenmeyen bir hata oluştu.
+        </td>
     </tr>
     <tr height="20">
         <td>&nbsp;</td>
     </tr>
     <tr height="200" valign="top">
-        <td align="center">Favorilere dönmek için lütfen <a href="index.php?SK=59"><b>buraya tıklayınız</b></a></td>
+        <td align="center">Favori sayfasına dönmek için <a href="index.php?SK=59">buraya tıklayınız</a></td>
     </tr>
 </table>

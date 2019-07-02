@@ -2,6 +2,12 @@
 $ipAdresi = $_SERVER["REMOTE_ADDR"];
 $zamanDamgasi = time();
 $tarihSaat = date("d.m.Y H:i:s");
+
+/**
+ * @param timestamp $deger 
+ * 
+ * @return date
+ */
 function tarihBul($deger)
 {
 

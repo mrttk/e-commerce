@@ -81,4 +81,7 @@ $sayfa[76] = "hesabimyorumyapsonuc.php";
 $sayfa[77] = "hesabimyorumyapsonuctamam.php";
 $sayfa[78] = "hesabimyorumyapsonuchata.php";
 $sayfa[79] = "hesabimyorumyapsonuceksikalan.php";
+$sayfa[80] = "hesabimfavorilersil.php";
+$sayfa[81] = "hesabimfavorilersilhata.php";
+$sayfa[82] = "hesabimfavorilersileksikalan.php";
 ?>
