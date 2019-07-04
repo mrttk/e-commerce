@@ -315,10 +315,11 @@ a:visited {
 .AramaAlaniInputKapsamaAlani {
     display: inline-block;
     float: right;
-    width: -webkit- calc(100%-60px);
-    width: -moz- calc(100%-60px);
-    width: -o- calc(100%-60px);
-    width: -ms- calc(100%-60px);
+    width: -webkit-calc(100% - 60px);
+    width: -moz-calc(100% - 60px);
+    width: -o-calc(100% - 60px);
+    width: -ms-calc(100% - 60px);
+    width: calc(100% - 60px);
     height: 35px;
     margin: 0;
     padding: 0;
@@ -336,21 +337,23 @@ a:visited {
     padding: 0;
     border: 1px solid #646464;
     outline: 0;
-    text-align: left;
     background: url(../Resimler/AraButonuIciBuyuteci.png);
     background-repeat: no-repeat;
     background-position: center left 19px;
 }
 
-.AramaAlaniButonu:hover {}
+.AramaAlaniButonu:hover {
+    cursor: pointer;
+}
 
 .AramaAlaniInputu {
     display: block;
     float: left;
-    width: -webkit- calc(100%-42px);
-    width: -moz- calc(100%-42px);
-    width: -o- calc(100%-42px);
-    width: -ms- calc(100%-42px);
+    width: -webkit-calc(100% - 42px);
+    width: -moz-calc(100% - 42px);
+    width: -o-calc(100% - 42px);
+    width: -ms-calc(100% - 42px);
+    width: calc(100% - 42px);
     height: 33px;
     margin: 0;
     padding: 0;

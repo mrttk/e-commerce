@@ -26,7 +26,11 @@ function guvenlik($deger)
     $taglariTemizle = htmlspecialchars($boslukSil, ENT_QUOTES);
     return $etkisizYap = strip_tags($taglariTemizle);
 }
-
+/**
+ * Numeric ifadeler dışında veri girişinin yapılmasını engeller
+ * 
+ * return string|string[]
+ */
 function SayiliIcerikleriFiltrele($deger)
 {
     $boslukSil = trim($deger);
@@ -41,7 +45,11 @@ function donusumleriGeriDondur($deger)
     $etkinlestir = htmlspecialchars_decode($deger, ENT_QUOTES);
     return $etkinlestir;
 }
-
+/**
+ * Üyelik aktivasyon işlemleri için random kod üretir.
+ * 
+ * return string 
+ */
 function aktivasyonKoduUret()
 {
     $ilkBesli = rand(10000, 99999);
@@ -51,6 +59,11 @@ function aktivasyonKoduUret()
     return $kod;
 }
 
+/**
+ * Zaman damgalarını tarih formatını dönüştürür.
+ * 
+ * return string 
+ */
 function fiyatBicimlendir($deger)
 {
     $bicimlendir = number_format($deger, "2", ",", ".");

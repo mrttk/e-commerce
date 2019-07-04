@@ -1,9 +1,38 @@
 <?php
+include "Ayarlar/settings.php";
 if (isset($_REQUEST["MenuID"])) {
-    $gelenMenuId        =    SayiliIcerikleriFiltrele(Guvenlik($_REQUEST["MenuID"]));
+    $gelenMenuId        =    SayiliIcerikleriFiltrele(guvenlik($_REQUEST["MenuID"]));
+    $menuKosulu = "and MenuId = '$gelenMenuId'";
+    $sayfalamaKosulu = "&MenuID=" . $gelenMenuId;
 } else {
     $gelenMenuId        =    "";
+    $menuKosulu = "";
+    $sayfalamaKosulu = "";
 }
+
+
+if (isset($_REQUEST["AramaIcerigi"])) {
+    $gelenAramaIcerigi       =    guvenlik($_REQUEST["AramaIcerigi"]);
+    $aramaKosulu = "and UrunAdi like'%" . $gelenAramaIcerigi . "%'";
+    $sayfalamaKosulu .= "&AramaIcerigi=" . $gelenAramaIcerigi;
+} else {
+    $aramaKosulu = "";
+    $sayfalamaKosulu .= "";
+}
+
+/*Sayfalama Sorgu Başlangısı*/
+$sayfalamaIcinSolveSagButonSayisi = 2;
+$sayfaBasinaGosterilecekKayitSayisi = 10;
+$toplamKayitSayisiSorgusu = $dbConnection->prepare("select * from urunler where UrunTuru ='Erkek Ayakkabısı' and Durumu = '1'" . $menuKosulu . "" . $aramaKosulu . " order by id desc");
+$toplamKayitSayisiSorgusu->execute();
+$toplamKayitSayisi = $toplamKayitSayisiSorgusu->rowCount();
+$sayfalamayaBaslanacakKayitSayisi = ($sayfalama * $sayfaBasinaGosterilecekKayitSayisi) - $sayfaBasinaGosterilecekKayitSayisi;
+$bulunanSayfaSayisi = ceil($toplamKayitSayisi / $sayfaBasinaGosterilecekKayitSayisi);
+$anaMenununTümUrunSayiSorgusu = $dbConnection->prepare("select sum(UrunSayisi) as MenununToplamUrunu from menuler where UrunTuru='Erkek Ayakkabısı'");
+$anaMenununTümUrunSayiSorgusu -> execute();
+$anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETCH_ASSOC);
+
+/*Sayfalama Sorgu Sonu*/
 ?>
 <table width="1065" align="center" border="0" cellpadding="0" cellspacing="0">
     <tr>
@@ -16,7 +45,12 @@ if (isset($_REQUEST["MenuID"])) {
                                 <td bgcolor="#F1F1F1"><b>&nbsp;MENÜLER</b></td>
                             </tr>
                             <tr height="30">
-                                <td><a href="index.php?SK=84" style="text-decoration: none; <?php if ($GelenMenuId == "") { ?>color: #FF9900;<? } else { ?>color: #646464;<?php } ?> font-weight: bold;">&nbsp;Tüm Ürünler (XXX)</a></td>
+                                <td><a href="index.php?SK=84" style="text-decoration: none; font-weight: bold; 
+                                <?php if ($gelenMenuId == '') {
+                                    echo 'color: #FF9900;';
+                                } else {
+                                    echo 'color: #646464;';
+                                } ?> ">&nbsp;Tüm Ürünler (<?php echo $anaMenununTümUrunSayiSorgusu['MenununToplamUrunu']; ?>)</a></td>
                             </tr>
                             <?php
                             $MenulerSorgusu        =    $dbConnection->prepare("SELECT * FROM menuler WHERE UrunTuru = 'Erkek Ayakkabısı' ORDER BY MenuAdi ASC");
@@ -27,7 +61,7 @@ if (isset($_REQUEST["MenuID"])) {
                             foreach ($MenuKayitlari as $Menu) {
                                 ?>
                                 <tr height="30">
-                                    <td><a href="index.php?SK=84&MenuID=<?php echo $Menu["id"]; ?>" style="text-decoration: none; <?php if ($GelenMenuId == $Menu["id"]) { ?>color: #FF9900;<? } else { ?>color: #646464;<?php } ?> font-weight: bold;">&nbsp;<?php echo DonusumleriGeriDondur($Menu["MenuAdi"]); ?> (<?php echo DonusumleriGeriDondur($Menu["UrunSayisi"]); ?>)</a></td>
+                                    <td><a href="index.php?SK=84&MenuID=<?php echo $Menu["id"]; ?>" style="text-decoration: none; <?php if ($gelenMenuId == $Menu["id"]) { ?>color: #FF9900;<? } else { ?>color: #646464;<?php } ?> font-weight: bold;">&nbsp;<?php echo DonusumleriGeriDondur($Menu["MenuAdi"]); ?> (<?php echo DonusumleriGeriDondur($Menu["UrunSayisi"]); ?>)</a></td>
                                 </tr>
                             <?php
                             }
@@ -66,24 +100,127 @@ if (isset($_REQUEST["MenuID"])) {
 
 
         <td width="795" align="left" valign="top">
-            <table width="250" align="center" border="0" cellpadding="0" cellspacing="0">
+            <table width="795" align="center" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                     <td>
                         <div class="AramaAlani">
-                            <form action="index.php?SK=84" method="post">
-                                <div class="AramaAlaniButonKapsamaAlani"> 
+                            <form action="<?php if ($menuKosulu != "") { ?>index.php?SK=84&MenuID=<?php echo $gelenMenuId;
+                                                                                                } else { ?>index.php?SK=84<?php } ?>" method="post">
+                                <div class="AramaAlaniButonKapsamaAlani">
                                     <input type="submit" value="" class="AramaAlaniButonu">
                                 </div>
                                 <div class="AramaAlaniInputKapsamaAlani">
-                                    <input type="text" name="Arama" class="AramaAlaniInputu">
+                                    <input type="text" name="AramaIcerigi" class="AramaAlaniInputu">
                                 </div>
                             </form>
                         </div>
                     </td>
                 </tr>
-            </table>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+
+                    <td>
+
+                        <table align="left" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+
+                                <?php
+                                $urunlerSorgusu = $dbConnection->prepare("select * from urunler where UrunTuru ='Erkek Ayakkabısı' and Durumu = '1'" . $menuKosulu . "" . $aramaKosulu . " order by id desc limit $sayfalamayaBaslanacakKayitSayisi, $sayfaBasinaGosterilecekKayitSayisi");
+                                $urunlerSorgusu->execute();
+                                $urunSayisi = $urunlerSorgusu->rowCount();
+                                $urunKayitlari = $urunlerSorgusu->fetchAll(PDO::FETCH_ASSOC);
+                                $donguSayisi = 1;
+                                $sutunSayisiAdedi = 4;
+
+                                foreach ($urunKayitlari as $kayit) { ?>
+                                    <td width="191">
+                                        <table width="191" align="left" cellpadding="0" cellspacing="0" style="border: 1px solid #ccc; margin-bottom: 20px; padding-top: 2px">
+                                            <tr>
+                                                <td align="center"><img width="185" height="247" src="Resimler/UrunResimleri/Erkek/<?php echo $kayit['UrunResmiBir']; ?>"></td>
+                                            </tr>
+                                            <tr height="25">
+                                                <td width="253" style="padding:3px; text-align: center;"><?php echo $kayit['UrunAdi']; ?></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <?php
+                                    if ($donguSayisi < $sutunSayisiAdedi) { ?>
+                                        <td width="10">&nbsp;</td>
+                                    <?php
+                                    }
+                                    $donguSayisi++;
+                                    if ($donguSayisi > $sutunSayisiAdedi) {
+                                        echo "</tr><tr>";
+                                    }
+                                } ?>
+
+
+                        </table>
+                </tr>
+
+                <?php if ($bulunanSayfaSayisi > 1) {
+                    ?>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td align="left">
+
+                            <div class="SayfalamaAlaniKapsayicisi">
+                                <div class="SayfalamaAlaniIcinMetinAlaniKapsayicisi" align="center">
+                                    <p>Toplam <b><?php echo $bulunanSayfaSayisi; ?></b> sayfada,<b><?php echo $toplamKayitSayisi; ?></b> adet kayit bulunmaktadir.</p>
+                                </div>
+                                <div class="SayfalamaAlanıIcinNumaraAlaniKapsayicisi">
+                                    <?php
+                                    if ($sayfalama > 1) {
+                                        echo "<span class='SayfalamaPasif'> <a href='index.php?SK=84" . $sayfalamaKosulu . "&SYF=1'> << </a></span>";
+                                        $safalamaIcinSayfaDegeriniBirGeriAL = $sayfalama - 1;
+                                        echo "<span class='SayfalamaPasif'><a href='index.php?SK=84" . $sayfalamaKosulu .  "&SYF=" . $safalamaIcinSayfaDegeriniBirGeriAL . "'> < </a></span>";
+                                    }
+
+                                    for (
+                                        $sayfalamaIcinSayfaIndexDegeri = $sayfalama - $sayfalamaIcinSolveSagButonSayisi;
+                                        $sayfalamaIcinSayfaIndexDegeri <= $sayfalama + $sayfalamaIcinSolveSagButonSayisi;
+                                        $sayfalamaIcinSayfaIndexDegeri++
+                                    ) {
+                                        if (($sayfalamaIcinSayfaIndexDegeri > 0) and ($sayfalamaIcinSayfaIndexDegeri <= $bulunanSayfaSayisi)
+                                        ) {
+                                            if ($sayfalama == $sayfalamaIcinSayfaIndexDegeri) {
+                                                echo "<span class='SayfalamaAktif'>$sayfalamaIcinSayfaIndexDegeri</span>";
+                                            } else {
+                                                echo "<span class='SayfalamaPasif'><a href='index.php?SK=84" . $sayfalamaKosulu . "&SYF=" . $sayfalamaIcinSayfaIndexDegeri . "'>
+$sayfalamaIcinSayfaIndexDegeri</a></span>";
+                                            }
+                                        }
+                                    }
+
+
+                                    if ($sayfalama != $bulunanSayfaSayisi) {
+                                        $sayfalamaIcinSayfaDegeriniBirIleriAl = $sayfalama + 1;
+                                        echo "<span class='SayfalamaPasif'><a href='index.php?SK=84" . $sayfalamaKosulu .  "&SYF=" .
+                                            $sayfalamaIcinSayfaDegeriniBirIleriAl . "'> > </a></span>";
+                                        echo "<span class='SayfalamaPasif'><a href='index.php?SK=84" . $sayfalamaKosulu .  "&SYF=" . $bulunanSayfaSayisi . "'> >> </a></span>";
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+
+
+                <?php } ?>
+
         </td>
-
-
     </tr>
+
+
+</table>
+</td>
+
+
+</tr>
 </table>
