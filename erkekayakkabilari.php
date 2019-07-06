@@ -29,7 +29,7 @@ $toplamKayitSayisi = $toplamKayitSayisiSorgusu->rowCount();
 $sayfalamayaBaslanacakKayitSayisi = ($sayfalama * $sayfaBasinaGosterilecekKayitSayisi) - $sayfaBasinaGosterilecekKayitSayisi;
 $bulunanSayfaSayisi = ceil($toplamKayitSayisi / $sayfaBasinaGosterilecekKayitSayisi);
 $anaMenununTümUrunSayiSorgusu = $dbConnection->prepare("select sum(UrunSayisi) as MenununToplamUrunu from menuler where UrunTuru='Erkek Ayakkabısı'");
-$anaMenununTümUrunSayiSorgusu -> execute();
+$anaMenununTümUrunSayiSorgusu->execute();
 $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETCH_ASSOC);
 
 /*Sayfalama Sorgu Sonu*/
@@ -105,7 +105,7 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                     <td>
                         <div class="AramaAlani">
                             <form action="<?php if ($menuKosulu != "") { ?>index.php?SK=84&MenuID=<?php echo $gelenMenuId;
-                                                                                                } else { ?>index.php?SK=84<?php } ?>" method="post">
+                                                                                                    } else { ?>index.php?SK=84<?php } ?>" method="post">
                                 <div class="AramaAlaniButonKapsamaAlani">
                                     <input type="submit" value="" class="AramaAlaniButonu">
                                 </div>
@@ -134,14 +134,67 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                                 $donguSayisi = 1;
                                 $sutunSayisiAdedi = 4;
 
-                                foreach ($urunKayitlari as $kayit) { ?>
-                                    <td width="191">
+                                foreach ($urunKayitlari as $kayit) {
+                                    $urununToplamYorumSayisi = donusumleriGeriDondur($kayit['YorumSayisi']);
+                                    $urununToplamYorumPuani = donusumleriGeriDondur($kayit['ToplamYorumPuani']);
+
+
+                                    if ($urununToplamYorumSayisi > 0) {
+                                        $puanHesapla =  number_format($urununToplamYorumPuani / $urununToplamYorumSayisi, 2, ".", "");
+                                    } else {
+                                        $puanHesapla = 0;
+                                    }
+                                    
+                                    if ($puanHesapla == 0) {
+                                        $puanResmi = "YildizCizgiliBos.png";
+                                    } elseif ($puanHesapla > 0 & $puanHesapla <= 1) {
+                                        $puanResmi = "YildizCizgiliBirDolu.png";
+                                    } elseif ($puanHesapla > 1 & $puanHesapla <= 2) {
+                                        $puanResmi = "YildizCizgiliBirDolu.png";
+                                    } elseif ($puanHesapla > 2 & $puanHesapla <= 3) {
+                                        $puanResmi = "YildizCizgiliIkiDolu.png";
+                                    } elseif ($puanHesapla > 3 & $puanHesapla <= 4) {
+                                        $puanResmi = "YildizCizgiliDortDolu.png";
+                                    } else {
+                                        $puanResmi = "YildizCizgiliBesDolu.png";
+                                    }
+
+                                    ?>
+                                    <td width="191" valign="top">
                                         <table width="191" align="left" cellpadding="0" cellspacing="0" style="border: 1px solid #ccc; margin-bottom: 20px; padding-top: 2px">
                                             <tr>
-                                                <td align="center"><img width="185" height="247" src="Resimler/UrunResimleri/Erkek/<?php echo $kayit['UrunResmiBir']; ?>"></td>
+                                                <td align="center" width="191">
+                                                    <a href="index.php?SK=83&ID=<?php echo donusumleriGeriDondur($kayit['id']); ?>">
+                                                        <img width="185" height="247" src="Resimler/UrunResimleri/Erkek/<?php echo $kayit['UrunResmiBir']; ?>">
+                                                    </a>
                                             </tr>
-                                            <tr height="25">
-                                                <td width="253" style="padding:3px; text-align: center;"><?php echo $kayit['UrunAdi']; ?></td>
+                                            <tr>
+                                                <td align="center" width="191">
+                                                    <a href="index.php?SK=83&ID=<?php echo $kayit['id']; ?>" style="color:#FF9900; font-weight: bold;text-decoration: none;">
+                                                        Erkek Ayakkabısı
+                                                    </a>
+                                            </tr>
+                                            <tr height="25" align="center">
+                                                <td width="191" style="color:#646464;">
+                                                    <div style="width:191px;height:16px;">
+                                                        <?php echo donusumleriGeriDondur($kayit['UrunAdi']); ?></div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="191" align="center">
+                                                    <a href="index.php?SK=83&ID=<?php echo donusumleriGeriDondur($kayit['id']); ?>">
+                                                        <img src="Resimler/<?php echo $puanResmi; ?>">
+                                                    </a>
+                                            </tr>
+                                            <tr>
+                                                <td width="191" align="center">
+                                                    <a href="index.php?SK=83&ID=<?php echo donusumleriGeriDondur($kayit['id']); ?>" style="text-decoration:none; color:#646464;">
+                                                        <?php echo donusumleriGeriDondur(fiyatBicimlendir($kayit['UrunFiyati'])); ?> TL
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="191" align="center">&nbsp;</td>
                                             </tr>
                                         </table>
                                     </td>
@@ -155,8 +208,6 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                                         echo "</tr><tr>";
                                     }
                                 } ?>
-
-
                         </table>
                 </tr>
 
