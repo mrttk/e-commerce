@@ -28,6 +28,8 @@ if ($settingsRowCount > 0) {
     $SosyalLinkLinkedIn = $settingsRecord["SosyalLinkLinkedIn"];
     $SosyalLinkYoutube = $settingsRecord["SosyalLinkYoutube"];
     $SosyalLinkPinterest = $settingsRecord["SosyalLinkPinterest"];
+    $dolarKuru = $settingsRecord["DolarKuru"];
+    $euroKuru = $settingsRecord["EuroKuru"];
 } else {
     //echo "Ayar Sorgusu Hatası!";
     die();

@@ -104,8 +104,7 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                 <tr>
                     <td>
                         <div class="AramaAlani">
-                            <form action="<?php if ($menuKosulu != "") { ?>index.php?SK=84&MenuID=<?php echo $gelenMenuId;
-                                                                                                    } else { ?>index.php?SK=84<?php } ?>" method="post">
+                            <form action="<?php if ($menuKosulu != "") { ?>index.php?SK=84&MenuID=<?php echo $gelenMenuId;} else { ?>index.php?SK=84<?php } ?>" method="post">
                                 <div class="AramaAlaniButonKapsamaAlani">
                                     <input type="submit" value="" class="AramaAlaniButonu">
                                 </div>
@@ -120,12 +119,9 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
-
                     <td>
-
                         <table align="left" border="0" cellpadding="0" cellspacing="0">
                             <tr>
-
                                 <?php
                                 $urunlerSorgusu = $dbConnection->prepare("select * from urunler where UrunTuru ='Erkek Ayakkabısı' and Durumu = '1'" . $menuKosulu . "" . $aramaKosulu . " order by id desc limit $sayfalamayaBaslanacakKayitSayisi, $sayfaBasinaGosterilecekKayitSayisi");
                                 $urunlerSorgusu->execute();
@@ -135,6 +131,19 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                                 $sutunSayisiAdedi = 4;
 
                                 foreach ($urunKayitlari as $kayit) {
+
+                                    $urununFiyati = donusumleriGeriDondur($kayit['UrunFiyati']);
+                                    $urununParaBirimi = donusumleriGeriDondur($kayit['ParaBirimi']);
+
+                                    if ($urununParaBirimi == "USD") {
+                                        $urunFiyatiniHesapla = $urununFiyati * $dolarKuru;
+                                    } elseif ($urununParaBirimi == "EUR") {
+                                        $urunFiyatiniHesapla = $urununFiyati * $euroKuru;
+                                    } else {
+                                        $urunFiyatiniHesapla = $urununFiyati;
+                                    }
+
+
                                     $urununToplamYorumSayisi = donusumleriGeriDondur($kayit['YorumSayisi']);
                                     $urununToplamYorumPuani = donusumleriGeriDondur($kayit['ToplamYorumPuani']);
 
@@ -144,7 +153,7 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                                     } else {
                                         $puanHesapla = 0;
                                     }
-                                    
+
                                     if ($puanHesapla == 0) {
                                         $puanResmi = "YildizCizgiliBos.png";
                                     } elseif ($puanHesapla > 0 & $puanHesapla <= 1) {
@@ -189,7 +198,7 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                                             <tr>
                                                 <td width="191" align="center">
                                                     <a href="index.php?SK=83&ID=<?php echo donusumleriGeriDondur($kayit['id']); ?>" style="text-decoration:none; color:#646464;">
-                                                        <?php echo donusumleriGeriDondur(fiyatBicimlendir($kayit['UrunFiyati'])); ?> TL
+                                                        <?php echo fiyatBicimlendir($urunFiyatiniHesapla); ?> TL
                                                     </a>
                                                 </td>
                                             </tr>

@@ -135,6 +135,18 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                                 $sutunSayisiAdedi = 4;
 
                                 foreach ($urunKayitlari as $kayit) {
+
+                                    $urununFiyati = donusumleriGeriDondur($kayit['UrunFiyati']);
+                                    $urununParaBirimi = donusumleriGeriDondur($kayit['ParaBirimi']);
+
+                                    if ($urununParaBirimi == "USD") {
+                                        $urunFiyatiniHesapla = $urununFiyati * $dolarKuru;
+                                    } elseif ($urununParaBirimi == "EUR") {
+                                        $urunFiyatiniHesapla = $urununFiyati * $euroKuru;
+                                    } else {
+                                        $urunFiyatiniHesapla = $urununFiyati;
+                                    }
+
                                     $urununToplamYorumSayisi = donusumleriGeriDondur($kayit['YorumSayisi']);
                                     $urununToplamYorumPuani = donusumleriGeriDondur($kayit['ToplamYorumPuani']);
 
@@ -189,7 +201,7 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                                             <tr>
                                                 <td width="191" align="center">
                                                     <a href="index.php?SK=83&ID=<?php echo donusumleriGeriDondur($kayit['id']); ?>" style="text-decoration:none; color:#646464;">
-                                                        <?php echo donusumleriGeriDondur(fiyatBicimlendir($kayit['UrunFiyati'])); ?> TL
+                                                        <?php echo fiyatBicimlendir($urunFiyatiniHesapla); ?> TL
                                                     </a>
                                                 </td>
                                             </tr>
