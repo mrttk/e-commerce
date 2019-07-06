@@ -165,7 +165,7 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                                             <tr>
                                                 <td align="center" width="191">
                                                     <a href="index.php?SK=83&ID=<?php echo donusumleriGeriDondur($kayit['id']); ?>">
-                                                        <img width="185" height="247" src="Resimler/UrunResimleri/Erkek/<?php echo $kayit['UrunResmiBir']; ?>">
+                                                        <img width="185" height="247" src="Resimler/UrunResimleri/Cocuk/<?php echo $kayit['UrunResmiBir']; ?>">
                                                     </a>
                                             </tr>
                                             <tr>
