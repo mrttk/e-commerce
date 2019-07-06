@@ -156,7 +156,7 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                                     } else {
                                         $puanHesapla = 0;
                                     }
-                                    
+
                                     if ($puanHesapla == 0) {
                                         $puanResmi = "YildizCizgiliBos.png";
                                     } elseif ($puanHesapla > 0 & $puanHesapla <= 1) {
@@ -220,7 +220,9 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                                         echo "</tr><tr>";
                                     }
                                 } ?>
+                            </tr>
                         </table>
+                    </td>
                 </tr>
 
                 <?php if ($bulunanSayfaSayisi > 1) {

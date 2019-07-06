@@ -104,7 +104,8 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                 <tr>
                     <td>
                         <div class="AramaAlani">
-                            <form action="<?php if ($menuKosulu != "") { ?>index.php?SK=84&MenuID=<?php echo $gelenMenuId;} else { ?>index.php?SK=84<?php } ?>" method="post">
+                            <form action="<?php if ($menuKosulu != "") { ?>index.php?SK=84&MenuID=<?php echo $gelenMenuId;
+                                                                                                    } else { ?>index.php?SK=84<?php } ?>" method="post">
                                 <div class="AramaAlaniButonKapsamaAlani">
                                     <input type="submit" value="" class="AramaAlaniButonu">
                                 </div>
@@ -217,7 +218,9 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                                         echo "</tr><tr>";
                                     }
                                 } ?>
+                            </tr>
                         </table>
+                    </td>
                 </tr>
 
                 <?php if ($bulunanSayfaSayisi > 1) {
