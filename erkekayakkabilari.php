@@ -186,7 +186,7 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                                             </tr>
                                             <tr height="25" align="center">
                                                 <td width="191" style="color:#646464;">
-                                                    <div style="width:191px;height:16px;">
+                                                    <div style="width:191px;height:16px;line-height:20px;overflow:hidden;">
                                                         <?php echo donusumleriGeriDondur($kayit['UrunAdi']); ?></div>
                                                 </td>
                                             </tr>
