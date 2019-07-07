@@ -31,7 +31,6 @@ if (isset($_REQUEST["SYF"])) {
     <meta name="description" content="<?php echo SayiliIcerikleriFiltrele($siteDescription); ?>">
     <meta name="keywords" content="<?php echo SayiliIcerikleriFiltrele($siteKeywords); ?>">
     <script language="JavaScript" type="text/javascript" src="Frameworks/JQuery/jquery-3.4.0.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="Ayarlar/functions.js"></script>
     <link type="text/css" rel="stylesheet" href="Ayarlar/style.css">
 </head <body>
