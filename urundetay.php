@@ -16,6 +16,18 @@ if (isset($_GET["ID"])) {
         } else {
             $resimKlasoru = "Cocuk";
         }
+
+        $urununFiyati = donusumleriGeriDondur($urunSorgusuKaydi['UrunFiyati']);
+        $urununParaBirimi = donusumleriGeriDondur($urunSorgusuKaydi['ParaBirimi']);
+
+        if ($urununParaBirimi == "USD") {
+            $urunFiyatiniHesapla = $urununFiyati * $dolarKuru;
+        } elseif ($urununParaBirimi == "EUR") {
+            $urunFiyatiniHesapla = $urununFiyati * $euroKuru;
+        } else {
+            $urunFiyatiniHesapla = $urununFiyati;
+        }
+
         ?>
 
         <table width="1065" align="center" cellpaddign="0" cellspacing="0">
@@ -39,13 +51,13 @@ if (isset($_GET["ID"])) {
                                             <img src="Resimler/UrunResimleri/<?php echo $resimKlasoru; ?>/<?php echo $urunSorgusuKaydi['UrunResmiBir'] ?>" width="108" height="144" style="border:1px solid #ccc;" onClick="$.UrunDetayResmiDegistir('<?php echo $resimKlasoru; ?>', '<?php echo $urunSorgusuKaydi["UrunResmiBir"]; ?>');">
                                         </td>
                                         <td width="10">&nbsp;</td>
-                                        <td width="108"><?php if ($urunSorgusuKaydi['UrunResmiIki']!= null) { ?>
+                                        <td width="108"><?php if ($urunSorgusuKaydi['UrunResmiIki'] != null) { ?>
                                                 <img src="Resimler/UrunResimleri/<?php echo $resimKlasoru; ?>/<?php echo $urunSorgusuKaydi['UrunResmiIki'] ?>" width="108" height="144" style="border:1px solid #ccc;" onClick="$.UrunDetayResmiDegistir('<?php echo $resimKlasoru; ?>', '<?php echo $urunSorgusuKaydi["UrunResmiIki"]; ?>');">
                                             <?php } else { ?>&nbsp;<?php } ?>
                                         </td>
                                         <td width="10">&nbsp;</td>
                                         <td width="108">
-                                            <?php if ($urunSorgusuKaydi['UrunResmiUc']!= null) { ?>
+                                            <?php if ($urunSorgusuKaydi['UrunResmiUc'] != null) { ?>
                                                 <img src="Resimler/UrunResimleri/<?php echo $resimKlasoru; ?>/<?php echo $urunSorgusuKaydi['UrunResmiUc'] ?>" width="108" height="144" style="border:1px solid #ccc;" onClick="$.UrunDetayResmiDegistir('<?php echo $resimKlasoru; ?>', '<?php echo $urunSorgusuKaydi["UrunResmiUc"]; ?>');">
                                             <?php } else { ?>&nbsp;<?php } ?>
                                         </td>
@@ -88,48 +100,54 @@ if (isset($_GET["ID"])) {
                         </tr>
                         <tr>
                             <td>
-                                <table width="705" border="0" cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td width="30">
-                                            <a href="<?php echo $SosyalLinkFacebook; ?>" target="_blank">
-                                                <img src="Resimler/Facebook24x24.png">
-                                            </a>
-                                        </td>
-                                        <td width="30">
-                                            <a href="<?php echo $SosyalLinkTwitter; ?>" target="_blank">
-                                                <img src="Resimler/Twitter24x24.png">
-                                            </a></td>
-                                        <td width="30">
-                                            <?php if (isset($kullaniciId)) { ?>
-                                                <a href="index.php?SK=87&ID=<?php echo $urunSorgusuKaydi['id']; ?>">
-                                                    <img src="Resimler/KalpKirmiziDaireliBeyaz24x24.png">
+                                <form action="index.php?SK=91&ID=<?php echo $urunSorgusuKaydi['id']; ?>" method="POST">
+                                    <table width="705" border="0" cellpadding="0" cellspacing="0">
+                                        <tr height="45">
+                                            <td width="30">
+                                                <a href="<?php echo $SosyalLinkFacebook; ?>" target="_blank">
+                                                    <img src="Resimler/Facebook24x24.png">
                                                 </a>
-                                            <?php
-                                            } else {
+                                            </td>
+                                            <td width="30">
+                                                <a href="<?php echo $SosyalLinkTwitter; ?>" target="_blank">
+                                                    <img src="Resimler/Twitter24x24.png">
+                                                </a></td>
+                                            <td width="30">
+                                                <?php if (isset($kullaniciId)) { ?>
+                                                    <a href="index.php?SK=87&ID=<?php echo $urunSorgusuKaydi['id']; ?>">
+                                                        <img src="Resimler/KalpKirmiziDaireliBeyaz24x24.png">
+                                                    </a>
+                                                <?php
+                                                } else {
+                                                    ?>
+                                                    <p>&nbsp;</p>
+                                                <?php
+                                                }
                                                 ?>
-                                                <p>&nbsp;</p>
-                                            <?php
-                                            }
-                                            ?>
-                                        </td>
-                                        <td width="10">&nbsp;</td>
-                                        <td width="30">
-                                            <a href="index.php?SK=87&ID=<?php echo $urunSorgusuKaydi['id']; ?>">
-                                            </a>
-                                        </td>
-                                        <td width="605">&nbsp;</td>
-                                    </tr>
-                                </table>
+                                            </td>
+                                            <td width="10">&nbsp;</td>
+                                            <td width="605">
+                                                <input type="submit" value="SEPETE EKLE" class="SepeteEkleButonu">
+                                            </td>
+                                        </tr>
+                                        <tr height="45">
+                                            <td colspan="5">
+                                                <table width="705" border="0" cellpadding="0" cellspacing="0">
+                                                    <tr height="45">
+                                                        <td width="500" align="left"></td>
+                                                        <td width="250" align="right"><?php echo fiyatBicimlendir($urunFiyatiniHesapla); ?> TL</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
                             </td>
                         </tr>
                     </table>
-
-
                 </td>
-
             </tr>
         </table>
-
     <?php
     } else {
         header("Location:index.php");
