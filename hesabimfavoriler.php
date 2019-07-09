@@ -1,10 +1,8 @@
 <?php
-require_once "Ayarlar/settings.php";
-require_once "Ayarlar/functions.php";
 
 if (isset($_SESSION["Kullanici"])) {
     $sayfalamaIcinSolveSagButonSayisi = 2;
-    $sayfaBasinaGosterilecekKayitSayisi = 1;
+    $sayfaBasinaGosterilecekKayitSayisi = 10;
 
     $toplamKayitSayisiSorgusu = $dbConnection->prepare("select * from favoriler where UyeId = ? order by id desc");
     $toplamKayitSayisiSorgusu->execute([$kullaniciId]);
