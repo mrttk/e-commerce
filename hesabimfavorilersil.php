@@ -11,7 +11,7 @@ if (isset($_SESSION["Kullanici"])) {
         $favoriSilmeSorgusu->execute([$gelenID, $kullaniciId]);
         $favoriSilmeSayisi = $favoriSilmeSorgusu->rowCount();
 
-        if ($adresSilmeSayisi > 0) {
+        if ($favoriSilmeSayisi > 0) {
             header("Location:index.php?SK=59");
             exit();
         } else {
