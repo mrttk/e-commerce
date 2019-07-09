@@ -14,6 +14,14 @@ function tarihBul($deger)
     return $tarihSaat = date("d.m.Y H:i:s", $deger);
 }
 
+function UcGunIleriTarihBul()
+{
+    global $zamanDamgasi;
+    $birGun = 86400;
+    $hesapla = $zamanDamgasi + (3 * $birGun);
+    return $cevir = date("d.m.Y", $hesapla);
+}
+
 function rakamlarHaricTumKarakterleriSil($deger)
 {
     $islem = preg_replace("/[^0-9]/", "", $deger);
@@ -69,5 +77,3 @@ function fiyatBicimlendir($deger)
     $bicimlendir = number_format($deger, "2", ",", ".");
     return $bicimlendir;
 }
-
-?>
