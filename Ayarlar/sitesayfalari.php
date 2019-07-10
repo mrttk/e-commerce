@@ -91,4 +91,6 @@ $sayfa[88] = "favorilereekletamam.php";
 $sayfa[89] = "favorilereeklehata.php";
 $sayfa[90] = "favorilereekletekrarlanan.php";
 $sayfa[91] = "sepeteekle.php";
+$sayfa[92] = "sepeteeklehata.php";
+$sayfa[92] = "sepeteekleuyegirisiyapilmamis.php";
 ?>
