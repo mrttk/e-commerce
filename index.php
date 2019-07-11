@@ -4,7 +4,7 @@ ob_start();
 require_once "Ayarlar/settings.php";
 require_once "Ayarlar/functions.php";
 require_once "Ayarlar/sitesayfalari.php";
-    if (isset($_REQUEST["SK"])) {
+if (isset($_REQUEST["SK"])) {
     $sayfaKoduDegeri = SayiliIcerikleriFiltrele($_REQUEST["SK"]);
 } else {
     $sayfaKoduDegeri = 0;
@@ -49,14 +49,19 @@ if (isset($_REQUEST["SYF"])) {
                         <td width="70" class="MaviAlanMenusu"><a href="index.php?SK=50">Hesabım</a></td>
                         <td width="20"><a href=""><img src="Resimler/CikisBeyaz16x16.png" border="0" style="margin-top: 5px;"></a></td>
                         <td width="85" class="MaviAlanMenusu"><a href="index.php?SK=49">Çıkış Yap</a></td>
-                        <td width="20"><a href=""><img src="Resimler/SepetBeyaz16x16.png" border="0" style="margin-top: 5px;"></a></td>
+                       
                     <?php } else { ?>
                         <td width="70" class="MaviAlanMenusu"><a href="index.php?SK=31">Giriş Yap</a></td>
                         <td width="20"><a href=""><img src="Resimler/KullaniciEkleBeyaz16x16.png" border="0" style="margin-top: 5px;"></a></td>
                         <td width="85" class="MaviAlanMenusu"><a href="index.php?SK=22">Yeni Üye Ol</a></td>
-                        <td width="20"><a href=""><img src="Resimler/SepetBeyaz16x16.png" border="0" style="margin-top: 5px;"></a></td>
+
                     <?php } ?>
-                    <td width="103" class="MaviAlanMenusu"><a href="index.php?SK=94">Alışveriş Sepeti</a></td>
+                    <?php if (isset($_SESSION["Kullanici"])) { ?>
+                        <td width="20"><img src="Resimler/SepetBeyaz16x16.png" border="0" style="margin-top: 5px;"></td>
+                        <td width="103" class="MaviAlanMenusu">
+                            <a href="index.php?SK=94">Alışveriş Sepeti</a>
+                        </td>
+                    <?php } ?>
                 </tr>
             </table>
             <table width="1065" height="80" align="center" border="0" cellpadding="0" cellspacing="0">
