@@ -48,9 +48,10 @@ if (isset($_SESSION["Kullanici"])) {
                         $sepettekiKayitlar = $sepettekiUrunlerSorgusu->fetchAll(PDO::FETCH_ASSOC);
                         if ($sepettekiUrunSayisi > 0) {
 
-                            foreach ($$sepettekiKayitlar as $sepetSatirlari) {
+                            foreach ($sepettekiKayitlar as $sepetSatirlari) {
+                                $sepetIdsi = $sepetSatirlari["id"];
                                 $sepettekiUrununIdsi = $sepetSatirlari['UrunId'];
-                                $sepettekiUrununIdsi = $sepetSatirlari['VaryantId'];
+                                $urununVaryantIdsi = $sepetSatirlari['VaryantId'];
                                 $sepettekiUrununAdedi = $sepetSatirlari['UrunAdedi'];
 
                                 $urunBilgileriSorgusu = $dbConnection->prepare("select * from urunler where id = ? limit 1");
@@ -68,9 +69,35 @@ if (isset($_SESSION["Kullanici"])) {
                                 $varyantBilgisi = $urunVaryantBilgileriSorgusu->fetch(PDO::FETCH_ASSOC);
                                 $urununVaryantAdi = $varyantBilgisi['VaryantAdi'];
                                 $urununStokAdedi = $varyantBilgisi['StokAdedi'];
+
+                                if ($urununTuru == "Erkek Ayakkabısı") {
+                                    $resimKlasoru = "Erkek";
+                                } elseif ($urununTuru == "Kadın Ayakkabısı") {
+                                    $resimKlasoru = "Kadin";
+                                } else {
+                                    $resimKlasoru = "Cocuk";
+                                }
+
                                 ?>
                             <tr height="75">
-                                <td align="left">$kayitlar</td>
+                                <td align="left">
+                                    <table width="800" align="center" border="0" cellspadding="0" cellspacing="0">
+                                        <tr>
+                                            <td style="border-bottom:1px dashed #ccc;">
+                                                <img src="Resimler/UrunResimleri/<?php echo $resimKlasoru; ?>/<?php echo $urununResmi; ?>" border="0" width="60" height="80">
+                                            </td>
+                                            <td style="border-bottom:1px dashed #ccc;">
+                                                Sil
+                                            </td>
+                                            <td style="border-bottom:1px dashed #ccc;">
+                                                ADI / (Varyant)
+                                            </td>
+                                            <td style="border-bottom:1px dashed #ccc;">
+                                                Fiyat
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
                             </tr>
                         <?php } ?>
                     <?php } else { ?>
@@ -84,7 +111,7 @@ if (isset($_SESSION["Kullanici"])) {
     <td width="15">&nbsp;</td>
     <td width="300" valign="top">
         <table width="300" align="center" border="0" cellspacing="0" cellpadding="0" style="padding:0px 20px;
-                            text-align:justify;margin-bottom: 20px; ">
+                                            text-align:justify;margin-bottom: 20px; ">
             <tr height="40">
                 <td style="color: #FF9900;">
                     <h3>Alışveriş Özeti</h3>
