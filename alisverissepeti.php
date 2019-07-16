@@ -83,16 +83,17 @@ if (isset($_SESSION["Kullanici"])) {
                                 <td align="left">
                                     <table width="800" align="center" border="0" cellspadding="0" cellspacing="0">
                                         <tr>
-                                            <td style="border-bottom:1px dashed #ccc;">
+                                            <td style="border-bottom:1px dashed #ccc;" width="80">
                                                 <img src="Resimler/UrunResimleri/<?php echo $resimKlasoru; ?>/<?php echo $urununResmi; ?>" border="0" width="60" height="80">
                                             </td>
-                                            <td style="border-bottom:1px dashed #ccc;">
-                                                Sil
+                                            <td style="border-bottom:1px dashed #ccc;" width="40">
+                                                <a href="index.php?SK?95&ID=<?php echo donusumleriGeriDondur($sepetIdsi)?>"><img src="Resimler/SilDaireli20x20.png"></a>
                                             </td>
-                                            <td style="border-bottom:1px dashed #ccc;">
-                                                ADI / (Varyant)
-                                            </td>
-                                            <td style="border-bottom:1px dashed #ccc;">
+                                            <td style="border-bottom:1px dashed #ccc;" width="630">
+                                                    <?php echo donusumleriGeriDondur($urununAdi);?>
+                                                    <?php echo donusumleriGeriDondur($urununVaryantBasligi);?> :
+                                                    <?php echo donusumleriGeriDondur($urununVaryantAdi);?>
+                                            <td style="border-bottom:1px dashed #ccc;" width="50">
                                                 Fiyat
                                             </td>
                                         </tr>
