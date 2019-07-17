@@ -1,5 +1,4 @@
 <?php
-include "Ayarlar/settings.php";
 if (isset($_REQUEST["MenuID"])) {
     $gelenMenuId        =    SayiliIcerikleriFiltrele(guvenlik($_REQUEST["MenuID"]));
     $menuKosulu = "and MenuId = '$gelenMenuId'";
@@ -9,7 +8,6 @@ if (isset($_REQUEST["MenuID"])) {
     $menuKosulu = "";
     $sayfalamaKosulu = "";
 }
-
 
 if (isset($_REQUEST["AramaIcerigi"])) {
     $gelenAramaIcerigi       =    guvenlik($_REQUEST["AramaIcerigi"]);
@@ -97,15 +95,15 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
             </table>
         </td>
         <td width="11">&nbsp;</td>
-
-
         <td width="795" align="left" valign="top">
             <table width="795" align="center" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                     <td>
                         <div class="AramaAlani">
-                            <form action="<?php if ($menuKosulu != "") { ?>index.php?SK=84&MenuID=<?php echo $gelenMenuId;
-                                                                                                    } else { ?>index.php?SK=84<?php } ?>" method="post">
+                            <form action="
+                            <?php 
+                            if ($menuKosulu != "") { ?> index.php?SK=84&MenuID=<?php echo $gelenMenuId;
+                                                        } else { ?> index.php?SK=84<?php } ?>" method="post">
                                 <div class="AramaAlaniButonKapsamaAlani">
                                     <input type="submit" value="" class="AramaAlaniButonu">
                                 </div>
@@ -177,17 +175,20 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                                                     <a href="index.php?SK=83&ID=<?php echo donusumleriGeriDondur($kayit['id']); ?>">
                                                         <img width="185" height="247" src="Resimler/UrunResimleri/Erkek/<?php echo $kayit['UrunResmiBir']; ?>">
                                                     </a>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td align="center" width="191">
                                                     <a href="index.php?SK=83&ID=<?php echo $kayit['id']; ?>" style="color:#FF9900; font-weight: bold;text-decoration: none;">
                                                         Erkek Ayakkabısı
                                                     </a>
+                                                </td>
                                             </tr>
                                             <tr height="25" align="center">
                                                 <td width="191" style="color:#646464;">
                                                     <div style="width:191px;height:16px;line-height:20px;overflow:hidden;">
-                                                        <?php echo donusumleriGeriDondur($kayit['UrunAdi']); ?></div>
+                                                        <?php echo donusumleriGeriDondur($kayit['UrunAdi']); ?>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -195,6 +196,7 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                                                     <a href="index.php?SK=83&ID=<?php echo donusumleriGeriDondur($kayit['id']); ?>">
                                                         <img src="Resimler/<?php echo $puanResmi; ?>">
                                                     </a>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td width="191" align="center">
@@ -222,7 +224,6 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                         </table>
                     </td>
                 </tr>
-
                 <?php if ($bulunanSayfaSayisi > 1) {
                     ?>
                     <tr>
@@ -272,18 +273,8 @@ $sayfalamaIcinSayfaIndexDegeri</a></span>";
                             </div>
                         </td>
                     </tr>
-
-
-
                 <?php } ?>
-
+            </table>
         </td>
     </tr>
-
-
-</table>
-</td>
-
-
-</tr>
 </table>
