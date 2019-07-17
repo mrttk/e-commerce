@@ -97,8 +97,6 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
             </table>
         </td>
         <td width="11">&nbsp;</td>
-
-
         <td width="795" align="left" valign="top">
             <table width="795" align="center" border="0" cellpadding="0" cellspacing="0">
                 <tr>
@@ -120,7 +118,6 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                     <td>&nbsp;</td>
                 </tr>
                 <tr>
-
                     <td>
 
                         <table align="left" border="0" cellpadding="0" cellspacing="0">
@@ -232,10 +229,8 @@ $anaMenununTümUrunSayiSorgusu = $anaMenununTümUrunSayiSorgusu->fetch(PDO::FETC
                     <tr>
                         <td>&nbsp;</td>
                     </tr>
-
                     <tr>
                         <td align="left">
-
                             <div class="SayfalamaAlaniKapsayicisi">
                                 <div class="SayfalamaAlaniIcinMetinAlaniKapsayicisi" align="center">
                                     <p>Toplam <b><?php echo $bulunanSayfaSayisi; ?></b> sayfada,<b><?php echo $toplamKayitSayisi; ?></b> adet kayit bulunmaktadir.</p>
@@ -276,18 +271,10 @@ $sayfalamaIcinSayfaIndexDegeri</a></span>";
                             </div>
                         </td>
                     </tr>
-
-
-
                 <?php } ?>
-
         </td>
     </tr>
-
-
 </table>
 </td>
-
-
 </tr>
 </table>
