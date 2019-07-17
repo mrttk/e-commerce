@@ -32,7 +32,7 @@ if (isset($_SESSION["Kullanici"])) {
         </tr>
         <tr>
             <td width="750" valign="top">
-                <table width="750" align="center" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 20px; ">
+                <table width="750" align="center" border="0" cellspacing="0" cellpadding="0">
                     <tr height="40">
                         <td style="color:#FF9900;">
                             <h3>Alışveriş Sepeti</h3>
@@ -48,6 +48,9 @@ if (isset($_SESSION["Kullanici"])) {
                         $sepettekiKayitlar = $sepettekiUrunlerSorgusu->fetchAll(PDO::FETCH_ASSOC);
                         if ($sepettekiUrunSayisi > 0) {
 
+                            $sepettekiToplamUrunSayisi = 0;
+                            $sepettekiToplamFiyat = 0;
+
                             foreach ($sepettekiKayitlar as $sepetSatirlari) {
                                 $sepetIdsi = $sepetSatirlari["id"];
                                 $sepettekiUrununIdsi = $sepetSatirlari['UrunId'];
@@ -61,6 +64,7 @@ if (isset($_SESSION["Kullanici"])) {
                                 $urununTuru = $urunBilgisi['UrunTuru'];
                                 $urununResmi = $urunBilgisi['UrunResmiBir'];
                                 $urununAdi = $urunBilgisi['UrunAdi'];
+                                $urununFiyati = $urunBilgisi['UrunFiyati'];
                                 $urununParaBirimi = $urunBilgisi['ParaBirimi'];
                                 $urununVaryantBasligi = $urunBilgisi['VaryantBasligi'];
 
@@ -78,23 +82,55 @@ if (isset($_SESSION["Kullanici"])) {
                                     $resimKlasoru = "Cocuk";
                                 }
 
+                                if ($urununParaBirimi == "EUR") {
+                                    $urunFiyatiHesapla = $urununFiyati * $euroKuru * $sepettekiUrununAdedi;
+                                    $urunFiyatiniBicimlendir = fiyatBicimlendir($urunFiyatiHesapla);
+                                } elseif ($urununParaBirimi == "USD") {
+                                    $urunFiyatiHesapla = $urununFiyati * $dolarKuru * $sepettekiUrununAdedi;
+                                    $urunFiyatiniBicimlendir = fiyatBicimlendir($urunFiyatiHesapla);
+                                } else {
+                                    $urunFiyatiHesapla = $urununFiyati * $sepettekiUrununAdedi;
+                                    $urunFiyatiniBicimlendir = fiyatBicimlendir($urunFiyatiHesapla);
+                                }
+
+                                $sepettekiToplamUrunSayisi += $sepettekiUrununAdedi;
+                                $sepettekiToplamFiyat += $urunFiyatiHesapla;
                                 ?>
                             <tr height="75">
                                 <td align="left">
-                                    <table width="800" align="center" border="0" cellspadding="0" cellspacing="0">
+                                    <table width="750" align="center" border="0" cellspadding="0" cellspacing="0">
                                         <tr>
                                             <td style="border-bottom:1px dashed #ccc;" width="80">
                                                 <img src="Resimler/UrunResimleri/<?php echo $resimKlasoru; ?>/<?php echo $urununResmi; ?>" border="0" width="60" height="80">
                                             </td>
                                             <td style="border-bottom:1px dashed #ccc;" width="40">
-                                                <a href="index.php?SK?95&ID=<?php echo donusumleriGeriDondur($sepetIdsi)?>"><img src="Resimler/SilDaireli20x20.png"></a>
+                                                <a href="index.php?SK?95&ID=<?php echo donusumleriGeriDondur($sepetIdsi) ?>"><img src="Resimler/SilDaireli20x20.png"></a>
                                             </td>
-                                            <td style="border-bottom:1px dashed #ccc;" width="630">
-                                                    <?php echo donusumleriGeriDondur($urununAdi);?>
-                                                    <?php echo donusumleriGeriDondur($urununVaryantBasligi);?> :
-                                                    <?php echo donusumleriGeriDondur($urununVaryantAdi);?>
-                                            <td style="border-bottom:1px dashed #ccc;" width="50">
-                                                Fiyat
+                                            <td style="border-bottom:1px dashed #ccc;" width="390">
+                                                <?php echo donusumleriGeriDondur($urununAdi); ?>
+                                                <?php echo donusumleriGeriDondur($urununVaryantBasligi); ?> :
+                                                <?php echo donusumleriGeriDondur($urununVaryantAdi); ?>
+                                            <td style="border-bottom:1px dashed #ccc;" width="120">
+                                                <table width="90" align="center" border="0" cellspadding="0" cellspacing="0">
+                                                    <tr>
+                                                        <td width="30" align="center">
+                                                            <?php if ($sepettekiUrununAdedi > 1) { ?>
+                                                                <a href="index.php?SK?95&ID=<?php echo donusumleriGeriDondur($sepetIdsi) ?>">
+                                                                    <img src="Resimler/AzaltDaireli20x20.png">
+                                                                </a>
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td width="30" align="center"><?php echo donusumleriGeriDondur($sepettekiUrununAdedi); ?></td>
+                                                        <td width="30" align="center">
+                                                            <a href="index.php?SK?95&ID=<?php echo donusumleriGeriDondur($sepetIdsi) ?>">
+                                                                <img src="Resimler/ArttirDaireli20x20.png">
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td align="right" style="border-bottom:1px dashed #ccc;" width="120">
+                                                <?php echo $urunFiyatiniBicimlendir; ?> TL
                                             </td>
                                         </tr>
                                     </table>
@@ -112,17 +148,35 @@ if (isset($_SESSION["Kullanici"])) {
     <td width="15">&nbsp;</td>
     <td width="300" valign="top">
         <table width="300" align="center" border="0" cellspacing="0" cellpadding="0" style="padding:0px 20px;
-                                            text-align:justify;margin-bottom: 20px; ">
+                                                                                                                                                                        text-align:justify;margin-bottom: 20px; ">
             <tr height="40">
-                <td style="color: #FF9900;">
-                    <h3>Alışveriş Özeti</h3>
+                <td style="color: #FF9900;" align="right">
+                    <h3>Sipariş Özeti</h3>
                 </td>
             </tr>
-            <tr height="30">
-                <td valign="top" style="border-bottom: 1px dashed #CCC"> Özet bilgilere aşağıdan
-                    ulaşabilirsiniz.
-                </td>
-            </tr>
+            <?php
+            if (isset($sepettekiToplamUrunSayisi)) { ?>
+                <tr height="30">
+                    <td align="right" valign="top" style="border-bottom: 1px dashed #CCC">
+                        Toplam <b> <?php echo $sepettekiToplamUrunSayisi; ?></b> adet ürün bulunmaktadır.
+                    </td>
+                </tr>
+                <tr height="5">
+                    <td>&nbsp;</td>
+                </tr>
+                <tr align="right">
+                    <td>Ödenecek Toplam Tutar (KDV Dahil)</td>
+                </tr>
+                <tr align="right">
+                    <td><?php echo fiyatBicimlendir($sepettekiToplamFiyat); ?></td>
+                </tr>
+            <?php } else { ?>
+                <tr height="30">
+                    <td align="right" valign="top" style="border-bottom: 1px dashed #CCC">
+                        Sepete ürün eklemeniz gerekmektedir.
+                    </td>
+                </tr>
+            <?php } ?>
         </table>
     </td>
     </tr>
