@@ -95,4 +95,6 @@ $sayfa[92] = "sepeteeklehata.php";
 $sayfa[93] = "sepeteekleuyegirisiyapilmamis.php";
 $sayfa[94] = "alisverissepeti.php";
 $sayfa[95] = "alisverissepetiurunsil.php";
-?>
+$sayfa[96] = "alisverissepetiurunadetazalt.php";
+$sayfa[97] = "alisverissepetiurunadetarttir.php";
+$sayfa[98] = "alisverissepetiadresvekargosecimi.php";

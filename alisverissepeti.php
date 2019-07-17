@@ -148,7 +148,7 @@ if (isset($_SESSION["Kullanici"])) {
     <td width="15">&nbsp;</td>
     <td width="300" valign="top">
         <table width="300" align="center" border="0" cellspacing="0" cellpadding="0" style="padding:0px 20px;
-                                                                                                                                                                        text-align:justify;margin-bottom: 20px; ">
+                                                                                                                                                                            text-align:justify;margin-bottom: 20px; ">
             <tr height="40">
                 <td style="color: #FF9900;" align="right">
                     <h3>Sipariş Özeti</h3>
@@ -169,6 +169,16 @@ if (isset($_SESSION["Kullanici"])) {
                 </tr>
                 <tr align="right">
                     <td><?php echo fiyatBicimlendir($sepettekiToplamFiyat); ?></td>
+                </tr>
+                <tr height="5">
+                    <td>&nbsp;</td>
+                </tr>
+                <tr align="center">
+                    <td>
+                        <div class="SepetIciDevamEt">
+                            <a href="index.php?SK=98"><img src="Resimler/SepetBeyaz21x20.png"> DEVAM ET</a>
+                        </div>
+                    </td>
                 </tr>
             <?php } else { ?>
                 <tr height="30">
