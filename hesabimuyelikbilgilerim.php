@@ -1,6 +1,4 @@
 <?php
-require_once "Ayarlar/settings.php";
-require_once "Ayarlar/sitesayfalari.php";
 
 $kayitTarihi = $kullanici["KayitTarihi"];
 $kayitIpAdresi = $kullanici["KayitIpAdresi"];
@@ -96,7 +94,7 @@ if (isset($_SESSION["Kullanici"])) {
             </td>
             <td width="20">&nbsp;</td>
             <td width="545" valign="top">
-                <table width="565" align="center" border="0" cellspacing="0" cellpadding="0" style="padding:0px 20px;
+                <table width="545" align="center" border="0" cellspacing="0" cellpadding="0" style="padding:0px 20px;
             text-align:justify;margin-bottom: 20px; ">
                     <tr height="40">
                         <td style="color: #FF9900;"><h3>Reklam</h3></td>
