@@ -1,6 +1,31 @@
 <?php
-
 if (isset($_SESSION["Kullanici"])) {
+
+    $stokIcinSepettekiUrunlerSorgusu = $dbConnection->prepare("select * from sepet where UyeId = ?");
+    $stokIcinSepettekiUrunlerSorgusu->execute([$kullaniciId]);
+    $stokIcinSepettekiUrunSayisi = $stokIcinSepettekiUrunlerSorgusu->rowCount();
+    $stokIcinSepettekiKayitlar = $stokIcinSepettekiUrunlerSorgusu->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($stokIcinSepettekiUrunSayisi > 0) {
+
+        foreach ($stokIcinSepettekiKayitlar as $stokIcinSepettekiSatirlar) {
+            $stokIcinSepetIdsi = $stokIcinSepettekiSatirlar["id"];
+            $stokIcinSepettekiUrununVaryantIdsi = $stokIcinSepettekiSatirlar["VaryantId"];
+            $stokIcinSepettekiUrununAdedi = $stokIcinSepettekiSatirlar["UrunAdedi"];
+
+            $stokIcinUrununVaryantBilgileriSorgusu = $dbConnection->prepare("select * from urunvaryantlari where id = ? limit 1");
+            $stokIcinUrununVaryantBilgileriSorgusu->execute([$stokIcinSepettekiUrununVaryantIdsi]);
+            $stokIcinVaryantKaydi = $stokIcinUrununVaryantBilgileriSorgusu->fetch(PDO::FETCH_ASSOC);
+            $stokIcinUrununStokAdedi = $stokIcinVaryantKaydi["StokAdedi"];
+            if ($stokIcinUrununStokAdedi == 0) {
+                $sepetSilSorgusu = $dbConnection->prepare("delete from sepet where id = ? and UyeId = ? limit 1");
+                $sepetSilSorgusu->execute([$stokIcinSepetIdsi, $kullaniciId]);
+            } elseif ($stokIcinSepettekiUrununAdedi > $stokIcinUrununStokAdedi) {
+                $sepetGuncellemeSorgusu = $dbConnection->prepare("update sepet set UrunAdedi = ? where id = ? and UyeId = ? limit 1");
+                $sepetGuncellemeSorgusu->execute([$stokIcinUrununStokAdedi, $stokIcinSepetIdsi, $kullaniciId]);
+            }
+        }
+    }
     ?>
     <table width="1065" align="center" border="0" cellpadding="0" cellspacing="0" bgcolor="F9F9F9">
         <tr>
@@ -68,8 +93,8 @@ if (isset($_SESSION["Kullanici"])) {
                                 $urununParaBirimi = $urunBilgisi['ParaBirimi'];
                                 $urununVaryantBasligi = $urunBilgisi['VaryantBasligi'];
 
-                                $urunVaryantBilgileriSorgusu = $dbConnection->prepare("select * from urunvaryantlari where UrunId = ? limit 1");
-                                $urunVaryantBilgileriSorgusu->execute([$sepettekiUrununIdsi]);
+                                $urunVaryantBilgileriSorgusu = $dbConnection->prepare("select * from urunvaryantlari where id = ? limit 1");
+                                $urunVaryantBilgileriSorgusu->execute([$urununVaryantIdsi]);
                                 $varyantBilgisi = $urunVaryantBilgileriSorgusu->fetch(PDO::FETCH_ASSOC);
                                 $urununVaryantAdi = $varyantBilgisi['VaryantAdi'];
                                 $urununStokAdedi = $varyantBilgisi['StokAdedi'];
@@ -104,7 +129,7 @@ if (isset($_SESSION["Kullanici"])) {
                                                 <img src="Resimler/UrunResimleri/<?php echo $resimKlasoru; ?>/<?php echo $urununResmi; ?>" border="0" width="60" height="80">
                                             </td>
                                             <td style="border-bottom:1px dashed #ccc;" width="40">
-                                                <a href="index.php?SK?95&ID=<?php echo donusumleriGeriDondur($sepetIdsi) ?>"><img src="Resimler/SilDaireli20x20.png"></a>
+                                                <a href="index.php?SK=95&ID=<?php echo donusumleriGeriDondur($sepetIdsi) ?>"><img src="Resimler/SilDaireli20x20.png"></a>
                                             </td>
                                             <td style="border-bottom:1px dashed #ccc;" width="390">
                                                 <?php echo donusumleriGeriDondur($urununAdi); ?>
@@ -115,14 +140,14 @@ if (isset($_SESSION["Kullanici"])) {
                                                     <tr>
                                                         <td width="30" align="center">
                                                             <?php if ($sepettekiUrununAdedi > 1) { ?>
-                                                                <a href="index.php?SK?95&ID=<?php echo donusumleriGeriDondur($sepetIdsi) ?>">
+                                                                <a href="index.php?SK=96&ID=<?php echo donusumleriGeriDondur($sepetIdsi) ?>">
                                                                     <img src="Resimler/AzaltDaireli20x20.png">
                                                                 </a>
                                                             <?php } ?>
                                                         </td>
                                                         <td width="30" align="center"><?php echo donusumleriGeriDondur($sepettekiUrununAdedi); ?></td>
                                                         <td width="30" align="center">
-                                                            <a href="index.php?SK?95&ID=<?php echo donusumleriGeriDondur($sepetIdsi) ?>">
+                                                            <a href="index.php?SK=97&ID=<?php echo donusumleriGeriDondur($sepetIdsi) ?>">
                                                                 <img src="Resimler/ArttirDaireli20x20.png">
                                                             </a>
                                                         </td>
@@ -148,7 +173,7 @@ if (isset($_SESSION["Kullanici"])) {
     <td width="15">&nbsp;</td>
     <td width="300" valign="top">
         <table width="300" align="center" border="0" cellspacing="0" cellpadding="0" style="padding:0px 20px;
-                                                                                                                                                                            text-align:justify;margin-bottom: 20px; ">
+                                                                                                                                                                                                    text-align:justify;margin-bottom: 20px; ">
             <tr height="40">
                 <td style="color: #FF9900;" align="right">
                     <h3>Sipariş Özeti</h3>
