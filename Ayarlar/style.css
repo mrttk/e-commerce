@@ -406,3 +406,9 @@ a:visited {
     text-decoration: none;
     padding-top: 5px;
 }
+
+.SepetIciDevamEt a:hover {
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
