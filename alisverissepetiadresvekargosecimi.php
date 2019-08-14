@@ -103,6 +103,12 @@ if (isset($_SESSION["Kullanici"])) {
 
                                 $sepettekiToplamUrunSayisi += $sepettekiUrununAdedi;
                                 $sepettekiToplamFiyat += $urunFiyatiHesapla;
+                                $adreslerSorgusu = $dbConnection->prepare("select * from adresler where UyeId = ? order by id desc");
+                                $adreslerSorgusu->execute([$kullaniciId]);
+                                $adreslerSayisi = $adreslerSorgusu->rowCount();
+                                $adresKayitlari = $adreslerSorgusu->fetchAll(PDO::FETCH_ASSOC);
+                                foreach ($adresKayitlari as $adresSatirlari) { }
+
                                 ?>
                             <tr height="75">
                                 <td align="left">
@@ -126,7 +132,7 @@ if (isset($_SESSION["Kullanici"])) {
     <td width="15">&nbsp;</td>
     <td width="300" valign="top">
         <table width="300" align="center" border="0" cellspacing="0" cellpadding="0" style="padding:0px 20px;
-                                                                                                                                                                                                            text-align:justify;margin-bottom: 20px; ">
+                                                                                                                                                                                                                    text-align:justify;margin-bottom: 20px; ">
             <tr height="40">
                 <td style="color: #FF9900;" align="right">
                     <h3>Sipariş Özeti</h3>
